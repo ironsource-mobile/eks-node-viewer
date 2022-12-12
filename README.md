@@ -14,7 +14,15 @@
 
 ### Installation
 ```shell
-go install github.com/awslabs/eks-node-viewer/cmd/eks-node-viewer@latest
+docker build -t eks-node-viewer .
+```
+### Run
+```
+docker run -v "/$HOME/.kube/config:/root/.kube/config" -v "/$HOME/.aws/config:/root/.aws/config" -v "/$HOME/.aws/credentials:/root/.aws/credentials" -it eks-node-viewer
+```
+### Add alias to ~/.zshrc
+```
+alias eks-node-viewer="docker run -v /$HOME/.kube/config:/root/.kube/config -v /$HOME/.aws/config:/root/.aws/config -v /$HOME/.aws/credentials:/root/.aws/credentials -it eks-node-viewer"
 ```
 ### Standard Usage
 ```shell
@@ -31,16 +39,5 @@ eks-node-viewer --nodeSelector "karpenter.sh/provisioner-name"
 eks-node-viewer --resources cpu,memory
 ```
 ### Troubleshooting
-
-#### NoCredentialProviders: no valid providers in chain. Deprecated.
-
-This CLI relies on AWS credentials to access pricing data. You must have credentials configured via `~/aws/credentials`, `~/.aws/config`, environment variables, or some other credential provider chain.
-
-See [credential provider documentation](https://docs.aws.amazon.com/sdk-for-go/api/aws/session/) for more.
-
-## Development
-
-### Building
-```shell
-$ make build
-```
+#### Build doesn't work
+Close the VPN
